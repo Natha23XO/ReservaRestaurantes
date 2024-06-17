@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{snippet/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{snippet/nav-bar :: navbar}"></nav>
+<div th:replace="~{snippet/nav-bar :: menu}"></div>
+<div class="p-3">
+    <div class="rounded p-3 bg-light">
+        <h3>Restaurantes</h3>
+        <hr>
+        <div th:each="restaurante : ${restaurantes}">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="rounded border p-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img th:src="${restaurante.foto}" class="cuadrada  img-fluid rounded" alt="Foto del restaurante">
+                            </div>
+                            <div class="col-md-9">
+                                <h4 th:text="${restaurante.nombre}"></h4>
+                                <p th:text="${restaurante.descripcion}"></p>
+                                <a class="btn btn-primary" th:href="@{/restaurante/{id}(id=${restaurante.id})}">Ver Restaurante</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

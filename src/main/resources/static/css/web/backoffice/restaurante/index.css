@@ -1,0 +1,64 @@
+body {
+    background-color: #E5A055;
+}
+
+.big-icon {
+    font-size: 1.5rem;
+}
+
+#navbar-principal {
+    background-color: #DE8729;
+}
+
+.offcanvas {
+    background-color: #E5A055;
+}
+
+.offcanvas .offcanvas-header {
+    background-color: #DE8729;
+}
+
+.offcanvas-menu ul {
+    width: 100%;
+    padding: 0;
+}
+
+.offcanvas-menu ul li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.offcanvas-menu ul li a {
+    font-size: 20px;
+    color: black;
+    font-weight: 400;
+    line-height: 1.5;
+    display: block;
+    text-decoration: none;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.offcanvas-menu ul li hr {
+    margin: auto;
+    width: 92%;
+}
+
+.offcanvas-menu ul li:hover a {
+    background-color: #E39846;
+}
+
+.vertical-line {
+    width: 2px;
+    height: 500px;
+}
+
+.custom-btn-1 {
+    width: 100px;
+}
+
+.custom-btn-2 {
+    width: 150px;
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Restaurante</title>
+</head>
+<body>
+<h1>Nuevo Restaurante</h1>
+<form id="restauranteForm" th:action="@{/restaurante}" th:object="${restaurante}" method="post" enctype="multipart/form-data">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" th:field="*{nombre}" /><br />
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" th:field="*{direccion}" /><br />
+    <label for="fotoSubir">Foto:</label>
+    <input type="file" id="fotoSubir" name="fotoSubir" /><br />
+    <button type="submit">Guardar</button>
+</form>
+<a th:href="@{/restaurantes}">Volver a la lista</a>
+</body>
+</html>

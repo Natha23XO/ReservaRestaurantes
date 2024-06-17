@@ -1,0 +1,6 @@
+.cuadrada {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Establece la relación de aspecto 1:1 */
+    border-radius: 10px; /* Opcional: redondea las esquinas */
+}
