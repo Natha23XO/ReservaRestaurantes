@@ -18,10 +18,6 @@ public class RestauranteController {
     @Autowired
     private RestauranteApiService restauranteApiService;
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "backoffice/restaurante/index-restaurantes";
-    }
     @GetMapping("/restaurantes")
     public String listarRestaurantes(Model model) {
         List<Restaurante> restaurantes = restauranteApiService.obtenerRestaurantes();
@@ -44,6 +40,7 @@ public class RestauranteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el restaurante");
         }
     }
+
     @GetMapping("/restaurante/{id}")
     public String restaurante(Model model,@PathVariable String id) {
         Restaurante r = restauranteApiService.obtenerRestauranteID(id);
