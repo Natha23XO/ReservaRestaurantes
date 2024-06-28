@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{snippet/head :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{snippet/nav-bar :: navbar}"></nav>
+<div th:replace="~{snippet/nav-bar :: menu}"></div>
+<div class="p-3">
+    <div class="rounded p-3 bg-light">
+        <h3>Buscar</h3>
+        <form th:action="@{/reserva/buscar}" method="post">
+            <div class="row">
+                <div class="col">
+                    <label for="idReserva" class="form-label">Numero de Orden: </label>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" id="idReserva" name="idReserva"
+                           th:value="${idReserva}">
+                </div>
+                <div class="col">
+                    <button class="btn btn-info" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="p-3" th:if="${reserva != null}">
+    <div class="rounded p-3 bg-light" th:each="reser : ${reserva}">
+        <h3>Resultado de busqueda</h3>
+        <hr>
+        <div class="border border-1 border-black mb-3 rounded">
+            <form th:action="@{/reserva/finalizar}" method="post">
+                <div class="ps-2 py-2 pe-3 d-flex justify-content-between">
+                    <h5 class="me-3 m-auto ms-2">RESERVA: <span th:text="${reser.numeroOrden}"></span></h5>
+                    <button type="submit" class="btn btn-warning custom-btn-1">Finalizar</button>
+                </div>
+                <hr class="m-0 border-black border-1">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-3 text-center">
+                            <img class="border-1 border border-black cuadrada">
+                        </div>
+                        <div class="col-lg-10 col-sm-9 text-start m-auto">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtNombreCliente" th:value="${reser.usuario.nombres}" readonly>
+                                        <label for="txtNombreCliente">Cliente</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtCantidadComensales" th:value="${reser.cantidadComensales}"  readonly>
+                                        <label for="txtCantidadComensales">Cantidad de Comensales</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtEstadoReserva" th:value="${reser.estado}" readonly>
+                                        <label for="txtEstadoReserva">Estado Reserva</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtFechaReserva" th:value="${#dates.format(reser.fechaReserva, 'yyyy-MM-dd')}" readonly>
+                                        <label for="txtFechaReserva">Fecha Reserva</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtHoraInicio" th:value="${#dates.format(reser.horario.horaInicio, 'HH:mm:ss')}" readonly>
+                                        <label for="txtHoraInicio">Hora Inicio</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="txtHoraFin" th:value="${#dates.format(reser.horario.horaFin, 'HH:mm:ss')}" readonly>
+                                        <label for="txtHoraFin">Hora Fin</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--OCULTOS-->
+                <input type="hidden" th:value="${reser.numeroOrden}" name="numeroOrden" readonly>
+                <input type="hidden" th:value="${reser.horario.idHorario}" name="idHorario" readonly>
+            </form>
+        </div>
+        <!--div class="border border-1 border-black mb-3 rounded">
+            <div class="ps-2 py-2 pe-3 d-flex justify-content-between">
+                <h5 class="me-auto m-auto ms-2">Horarios</h5>
+                <div>
+                    <button class="btn btn-warning custom-btn-1 me-3">Agregar</button>
+                    <button class="btn btn-warning custom-btn-1" disabled>Eliminar</button>
+                </div>
+            </div>
+            <hr class="m-0 border-black border-1">
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Domingo</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Lunes</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 2</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Martes</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Miércoles</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 2</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Jueves</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Viernes</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 2</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 border-end mb-5">
+                        <p class="fw-bold">Sábado</p>
+                        <div class="row">
+                            <div class="col">
+                                <p>Turno 1</p>
+                            </div>
+                            <div class="col text-end">
+                                <input type="checkbox" class="form-check-input">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de apertura</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" value="00:00" readonly>
+                            <label>H. de cierre</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div-->
+    </div>
+</div>
+</body>
+</html>
