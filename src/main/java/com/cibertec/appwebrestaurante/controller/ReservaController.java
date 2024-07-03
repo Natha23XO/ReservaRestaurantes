@@ -28,10 +28,12 @@ public class ReservaController {
     public String buscarPorId(Model model, @RequestParam(name = "idReserva", required = false) Integer idR){
         if(idR != null){
             Reserva r = reservaApiService.obtenerReservaPorId(idR);
-            r.setFechaReserva(DateUtils.addOneDay(r.getFechaReserva()));
-            r.getHorario().setHoraInicio(DateUtils.addHoursToDate(r.getHorario().getHoraInicio(),5));
-            if(r.getHorario().getHoraFin() != null){
-                r.getHorario().setHoraFin(DateUtils.addHoursToDate(r.getHorario().getHoraFin(),5));
+            if(r != null){
+                r.setFechaReserva(DateUtils.addOneDay(r.getFechaReserva()));
+                r.getHorario().setHoraInicio(DateUtils.addHoursToDate(r.getHorario().getHoraInicio(),5));
+                if(r.getHorario().getHoraFin() != null){
+                    r.getHorario().setHoraFin(DateUtils.addHoursToDate(r.getHorario().getHoraFin(),5));
+                }
             }
             model.addAttribute("reserva",r);
         }
