@@ -34,7 +34,9 @@
             <form th:action="@{/reserva/finalizar}" method="post">
                 <div class="ps-2 py-2 pe-3 d-flex justify-content-between">
                     <h5 class="me-3 m-auto ms-2">RESERVA: <span th:text="${reser.numeroOrden}"></span></h5>
-                    <button type="submit" class="btn btn-warning custom-btn-1">Finalizar</button>
+                    <div id="finalizarButton" style="display:none;">
+                        <button type="submit" class="btn btn-warning custom-btn-1">Finalizar</button>
+                    </div>
                 </div>
                 <hr class="m-0 border-black border-1">
                 <div class="p-3">
@@ -288,5 +290,15 @@
         </div-->
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var estado = document.getElementById("txtEstadoReserva").value;
+        if (estado === "PENDIENTE") {
+            document.getElementById("finalizarButton").style.display = "block";
+        } else {
+            document.getElementById("finalizarButton").style.display = "none";
+        }
+    });
+</script>
 </body>
 </html>

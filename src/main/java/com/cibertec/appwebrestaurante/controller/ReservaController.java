@@ -4,6 +4,7 @@ import com.cibertec.appwebrestaurante.entity.Estado;
 import com.cibertec.appwebrestaurante.entity.Reserva;
 import com.cibertec.appwebrestaurante.entity.dto.ReservaDto2;
 import com.cibertec.appwebrestaurante.service.ReservaApiService;
+import com.cibertec.appwebrestaurante.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,11 @@ public class ReservaController {
     public String buscarPorId(Model model, @RequestParam(name = "idReserva", required = false) Integer idR){
         if(idR != null){
             Reserva r = reservaApiService.obtenerReservaPorId(idR);
+            r.setFechaReserva(DateUtils.addOneDay(r.getFechaReserva()));
+            r.getHorario().setHoraInicio(DateUtils.addHoursToDate(r.getHorario().getHoraInicio(),5));
+            if(r.getHorario().getHoraFin() != null){
+                r.getHorario().setHoraFin(DateUtils.addHoursToDate(r.getHorario().getHoraFin(),5));
+            }
             model.addAttribute("reserva",r);
         }
         return "backoffice/reserva/home";
